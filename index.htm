@@ -401,15 +401,17 @@
   const mainContent = document.getElementById('mainContent');
   const enterBtn = document.getElementById('enterBtn');
 
-  // After 2 seconds, hide loading and show main content
-  setTimeout(() => {
-    loadingScreen.classList.remove('active');
-    mainContent.style.display = 'block';
-    init();
-  }, 2000);
-
+  // Only show loading screen after clicking Enter
   enterBtn.addEventListener('click', () => {
     loadingScreen.classList.add('active');
+    setTimeout(() => {
+      loadingScreen.classList.remove('active');
+      mainContent.style.display = 'block';
+      // Call your init() or other setup here if needed
+      if (typeof init === "function") init();
+    }, 2000);
+    // Hide welcome screen
+    document.getElementById('welcomeScreen').style.display = 'none';
   });
 
   // Show notification and animate cart icon
@@ -436,18 +438,12 @@
   }
 
   // Example usage: Call this function whenever an item is added to cart
-  // For example, in your addToCart function:
   function addToCart(itemIndex) {
     // ...your existing add-to-cart logic...
     showAddToCartNotification();
   }
 
-  // Rest of your JavaScript remains the same
-  function init() {
-    // Your existing initialization code
-  }
-
-  // Add this to your <script> section to add a shadow when scrolling:
+  // Sticky header shadow on scroll
   window.addEventListener('scroll', function() {
     const header = document.getElementById('mainHeader');
     if (window.scrollY > 10) {
@@ -461,4 +457,3 @@
 </script>
 </body>
 </html>
-``` 
