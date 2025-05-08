@@ -6,12 +6,41 @@
   <title>GCTU Local Restaurant</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
+    :root {
+      --bg: #f4f4f4;
+      --text: #333;
+      --header-bg: linear-gradient(rgba(44,62,80,0.7), rgba(44,62,80,0.7)), url('https://i.pinimg.com/736x/21/dc/f8/21dcf89c9d3cb820d3d8622baeb721b9.jpg');
+      --nav-bg: linear-gradient(rgba(44,62,80,0.95), rgba(44,62,80,0.95));
+      --section-bg: #fff;
+      --menu-bg: #fafafa;
+      --cart-bg: #f9f9f9;
+      --primary: #e74c3c;
+      --primary-dark: #c0392b;
+      --secondary: #e67e22;
+      --badge-bg: #e74c3c;
+      --badge-text: #fff;
+    }
+    body.dark-mode {
+      --bg: #23272f;
+      --text: #f4f4f4;
+      --header-bg: linear-gradient(rgba(44,62,80,0.95), rgba(44,62,80,0.95)), url('https://i.pinimg.com/736x/21/dc/f8/21dcf89c9d3cb820d3d8622baeb721b9.jpg');
+      --nav-bg: linear-gradient(rgba(44,62,80,1), rgba(44,62,80,1));
+      --section-bg: #23272f;
+      --menu-bg: #2c313a;
+      --cart-bg: #23272f;
+      --primary: #ff5e3a;
+      --primary-dark: #c0392b;
+      --secondary: #e67e22;
+      --badge-bg: #ff5e3a;
+      --badge-text: #fff;
+    }
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #f4f4f4;
-      color: #333;
+      background-color: var(--bg);
+      color: var(--text);
       overflow-x: hidden;
+      transition: background 0.3s, color 0.3s;
     }
     .welcome-screen {
       height: 100vh;
@@ -47,7 +76,7 @@
     }
     .welcome-screen button {
       padding: 15px 40px;
-      background-color: #e74c3c;
+      background-color: var(--primary);
       color: white;
       font-size: 1.4rem;
       border: none;
@@ -57,7 +86,7 @@
       transition: background-color 0.3s ease, transform 0.3s ease;
     }
     .welcome-screen button:hover {
-      background-color: #c0392b;
+      background-color: var(--primary-dark);
       transform: scale(1.1);
     }
     .enter-btn {
@@ -69,9 +98,10 @@
     }
     .main-content {
       display: none;
-      background-color: #fff;
+      background-color: var(--section-bg);
       padding: 20px;
       min-height: 100vh;
+      transition: background 0.3s, color 0.3s;
     }
     header {
       position: relative;
@@ -80,8 +110,7 @@
       text-align: center;
       box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
       z-index: 1;
-      background: linear-gradient(rgba(44,62,80,0.7), rgba(44,62,80,0.7)),
-        url('https://i.pinimg.com/736x/21/dc/f8/21dcf89c9d3cb820d3d8622baeb721b9.jpg');
+      background: var(--header-bg);
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
@@ -118,7 +147,7 @@
     .section-title {
       font-size: 2.5rem;
       margin-bottom: 20px;
-      color: #e74c3c;
+      color: var(--primary);
       text-align: center;
     }
     .menu-container {
@@ -134,13 +163,20 @@
       border-radius: 16px;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.13);
       width: 370px; /* Increased width */
-      background: #fafafa;
+      background: var(--menu-bg);
       display: flex;
       flex-direction: column;
       align-items: center;
-      transition: transform 0.3s, box-shadow 0.3s;
+      transition: transform 0.3s, box-shadow 0.3s, background 0.3s, color 0.3s;
       position: relative;
       font-size: 1.18rem; /* Slightly larger text */
+      color: var(--text);
+    }
+    body.dark-mode .menu-item {
+      background: rgba(44, 62, 80, 0.55); /* translucent dark glass */
+      box-shadow: 0 4px 24px 0 rgba(0,0,0,0.25), 0 1.5px 8px 0 rgba(0,0,0,0.10);
+      backdrop-filter: blur(8px);
+      border: 1.5px solid rgba(255,255,255,0.08);
     }
     .menu-item:hover {
       transform: translateY(-5px) scale(1.03);
@@ -162,23 +198,23 @@
     .menu-item h3 {
       font-size: 2.1rem; /* Bigger title */
       margin-bottom: 12px;
-      color: #333;
+      color: var(--text);
     }
     .menu-item p {
       font-size: 1.25rem;
-      color: #666;
+      color: var(--text);
       margin-bottom: 18px;
       text-align: center;
     }
     .menu-item span {
       font-size: 1.5rem;
       font-weight: bold;
-      color: #e74c3c;
+      color: var(--primary);
       margin-bottom: 14px;
     }
     .add-cart-btn {
       padding: 10px 25px;
-      background: linear-gradient(90deg, #e74c3c 60%, #e67e22 100%);
+      background: linear-gradient(90deg, var(--primary) 60%, var(--secondary) 100%);
       color: #fff;
       border: none;
       border-radius: 30px;
@@ -191,7 +227,7 @@
       overflow: hidden;
     }
     .add-cart-btn:hover {
-      background: linear-gradient(90deg, #e67e22 60%, #e74c3c 100%);
+      background: linear-gradient(90deg, var(--secondary) 60%, var(--primary) 100%);
       transform: scale(1.08) rotate(-2deg);
       box-shadow: 0 8px 24px rgba(231,76,60,0.18);
     }
@@ -210,13 +246,15 @@
     .cart-section {
       max-width: 500px;
       margin: 40px auto 0 auto;
-      background: #f9f9f9;
+      background: var(--cart-bg);
       border-radius: 12px;
       box-shadow: 0 2px 8px rgba(0,0,0,0.07);
       padding: 25px 30px;
+      color: var(--text);
+      transition: background 0.3s, color 0.3s;
     }
     .cart-section h2 {
-      color: #e74c3c;
+      color: var(--primary);
       margin-bottom: 18px;
       text-align: center;
     }
@@ -238,20 +276,20 @@
       font-weight: 500;
     }
     .cart-list .cart-item-qty {
-      color: #e74c3c;
+      color: var(--primary);
       margin: 0 8px;
     }
     .cart-total {
       text-align: right;
       font-size: 1.2rem;
       font-weight: bold;
-      color: #e74c3c;
+      color: var(--primary);
       margin-bottom: 10px;
     }
     .checkout-btn {
       width: 100%;
       padding: 12px 0;
-      background: linear-gradient(90deg, #e74c3c 60%, #e67e22 100%);
+      background: linear-gradient(90deg, var(--primary) 60%, var(--secondary) 100%);
       color: #fff;
       border: none;
       border-radius: 30px;
@@ -261,13 +299,13 @@
       transition: background 0.3s;
     }
     .checkout-btn:hover {
-      background: linear-gradient(90deg, #e67e22 60%, #e74c3c 100%);
+      background: linear-gradient(90deg, var(--secondary) 60%, var(--primary) 100%);
     }
     /* Sticky nav bar below header */
     nav {
       position: sticky;
       top: 0;
-      background: linear-gradient(rgba(44,62,80,0.95), rgba(44,62,80,0.95));
+      background: var(--nav-bg);
       z-index: 1001;
       padding: 18px 0 10px 0;
       box-shadow: 0 2px 8px rgba(44,62,80,0.08);
@@ -298,9 +336,77 @@
       transition: color 0.2s;
       vertical-align: middle;
     }
+    .cart-badge {
+      position: absolute;
+      top: -8px;
+      right: -8px;
+      background: var(--badge-bg);
+      color: var(--badge-text);
+      font-size: 10px;         /* Smaller font size */
+      font-weight: bold;
+      width: 16px;
+      height: 16px;
+      line-height: 16px;       /* Center number vertically */
+      border-radius: 50%;
+      display: none;
+      pointer-events: none;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.15);
+      text-align: center;
+      padding: 0;
+      transition: background 0.3s, color 0.3s;
+    }
+    /* Add a toggle button style */
+    .mode-toggle {
+      position: fixed;
+      top: 18px;
+      right: 24px;
+      z-index: 2000;
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      border-radius: 20px;
+      padding: 7px 18px 7px 14px;
+      font-size: 1rem;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(44,62,80,0.13);
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      transition: background 0.3s;
+    }
+    .mode-toggle:hover {
+      background: var(--primary-dark);
+    }
+    .mode-toggle i {
+      font-size: 1.1em;
+    }
+    .menu-tabs {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    .menu-tab {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 20px;
+      background: var(--primary);
+      color: #fff;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .menu-tab.active {
+      background: var(--primary-dark);
+    }
+    .menu-tab:hover {
+      background: var(--primary-dark);
+    }
   </style>
 </head>
 <body>
+  <button class="mode-toggle" id="modeToggle" title="Toggle dark/light mode">
+    <i class="fas fa-moon"></i> Dark Mode
+  </button>
 
 <!-- Welcome Screen -->
 <div class="welcome-screen" id="welcomeScreen">
@@ -318,13 +424,19 @@
     <h1>GCTU Local Restaurant</h1>
     <nav>
       <a href="#menu"><i class="fas fa-utensils"></i> Menu</a>
-      <a href="#cart" id="cartNav"><i class="fas fa-shopping-cart cart-nav-icon" id="cartNavIcon"></i> Your Cart</a>
+      <a href="#cart" id="cartNav" style="position:relative;">
+        <i class="fas fa-shopping-cart cart-nav-icon" id="cartNavIcon" style="position:relative;">
+          <span class="cart-badge" id="cartBadge" style="position:absolute;top:-10px;right:-12px;min-width:20px;text-align:center;display:none;"></span>
+        </i>
+        Your Cart
+      </a>
       <a href="#contact"><i class="fas fa-phone"></i> Contact</a>
     </nav>
   </header>
 
   <section id="menu">
     <h2 class="section-title"><i class="fas fa-utensils"></i> Our Menu</h2>
+    <div class="menu-tabs" id="menuTabs"></div>
     <div class="menu-container" id="menuContainer"></div>
   </section>
 
@@ -338,13 +450,13 @@
   <section id="contact" style="max-width:500px;margin:40px auto 0 auto;text-align:center;">
     <h2><i class="fas fa-phone"></i> Contact Us</h2>
     <p>
-      Email: <a href="mailto:alswell3208@icloud.com" style="color:#e74c3c;text-decoration:none;">alswell3208@icloud.com</a><br>
-      Phone: <a href="tel:+233592474248" style="color:#e74c3c;text-decoration:none;">+233 592 474 248</a>
+      Email: <a href="mailto:alswell3208@icloud.com" style="color:var(--primary);text-decoration:none;">alswell3208@icloud.com</a><br>
+      Phone: <a href="tel:+233592474248" style="color:var(--primary);text-decoration:none;">+233 592 474 248</a>
     </p>
   </section>
 
-  <section id="faq-feedback" style="max-width:600px;margin:40px auto 0 auto;padding:30px 20px;background:#fafafa;border-radius:14px;box-shadow:0 2px 8px rgba(0,0,0,0.07);">
-    <h2 style="color:#e74c3c;text-align:center;margin-bottom:18px;"><i class="fas fa-question-circle"></i> FAQ & Feedback</h2>
+  <section id="faq-feedback" style="max-width:600px;margin:40px auto 0 auto;padding:30px 20px;background:var(--menu-bg);border-radius:14px;box-shadow:0 2px 8px rgba(0,0,0,0.07);">
+    <h2 style="color:var(--primary);text-align:center;margin-bottom:18px;"><i class="fas fa-question-circle"></i> FAQ & Feedback</h2>
     <details style="margin-bottom:18px;">
       <summary style="font-weight:bold;cursor:pointer;">How do I place an order?</summary>
       <div style="margin-top:8px;">Browse the menu, click "Add to Cart" for your favorite dishes, then click "Checkout" in your cart section.</div>
@@ -360,7 +472,7 @@
       <input type="email" id="feedbackEmail" name="email" required style="width:100%;padding:8px;margin-bottom:10px;border-radius:6px;border:1px solid #ccc;"><br>
       <label for="feedbackMsg" style="font-weight:500;">Message:</label><br>
       <textarea id="feedbackMsg" name="message" rows="4" required style="width:100%;padding:8px;border-radius:6px;border:1px solid #ccc;margin-bottom:10px;"></textarea><br>
-      <button type="submit" style="background:#e74c3c;color:#fff;padding:10px 30px;border:none;border-radius:30px;font-size:1.1rem;cursor:pointer;">Send Feedback</button>
+      <button type="submit" style="background:var(--primary);color:#fff;padding:10px 30px;border:none;border-radius:30px;font-size:1.1rem;cursor:pointer;">Send Feedback</button>
     </form>
     <div id="feedbackStatus" style="margin-top:12px;text-align:center;"></div>
   </section>
@@ -418,19 +530,43 @@
     }
   ];
 
-  let cart = [];
+  const foodCategories = [
+    { name: "All", filter: () => true },
+    { name: "Rice", filter: item => /jollof|waakye/i.test(item.name) },
+    { name: "Swallow", filter: item => /banku|fufu|kokonte|tuo/i.test(item.name) },
+    { name: "Yam", filter: item => /yam/i.test(item.name) },
+    { name: "Kenkey", filter: item => /kenkey/i.test(item.name) },
+  ];
 
-  function enterSite() {
-    document.getElementById('welcomeScreen').style.display = 'none';
-    document.getElementById('mainContent').style.display = 'block';
-    renderMenu();
-    renderCart();
+  let currentCategory = "All";
+
+  // Render menu tabs
+  function renderMenuTabs() {
+    const menuTabs = document.getElementById('menuTabs');
+    if (!menuTabs) return;
+    menuTabs.innerHTML = '';
+    foodCategories.forEach(cat => {
+      const btn = document.createElement('button');
+      btn.className = 'menu-tab' + (cat.name === currentCategory ? ' active' : '');
+      btn.textContent = cat.name;
+      btn.onclick = () => {
+        currentCategory = cat.name;
+        renderMenu();
+        renderMenuTabs();
+      };
+      menuTabs.appendChild(btn);
+    });
   }
 
+  let cart = [];
+
+  // Update renderMenu to filter by category
   function renderMenu() {
     const menuContainer = document.getElementById('menuContainer');
     menuContainer.innerHTML = '';
-    menuItems.forEach((item, idx) => {
+    const catObj = foodCategories.find(c => c.name === currentCategory);
+    const items = catObj ? menuItems.filter(catObj.filter) : menuItems;
+    items.forEach((item, idx) => {
       const menuItem = document.createElement('div');
       menuItem.className = 'menu-item';
       menuItem.innerHTML = `
@@ -438,7 +574,7 @@
         <h3>${item.name}</h3>
         <p>${item.description}</p>
         <span>GHC ${item.price.toFixed(2)}</span>
-        <button class="add-cart-btn" onclick="addToCart(${idx}, this)">Add to Cart</button>
+        <button class="add-cart-btn" onclick="addToCart(${menuItems.indexOf(item)}, this)">Add to Cart</button>
       `;
       menuContainer.appendChild(menuItem);
     });
@@ -476,20 +612,33 @@
   function renderCart() {
     const cartList = document.getElementById('cartList');
     const cartTotal = document.getElementById('cartTotal');
+    const cartBadge = document.getElementById('cartBadge');
     cartList.innerHTML = '';
     let total = 0;
+    let itemCount = 0;
     cart.forEach((item, idx) => {
       total += item.price * item.qty;
+      itemCount += item.qty;
       const li = document.createElement('li');
       li.innerHTML = `
         <span class="cart-item-name">${item.name}</span>
         <span class="cart-item-qty">x${item.qty}</span>
         <span>GHC ${(item.price * item.qty).toFixed(2)}</span>
-        <button onclick="removeFromCart(${idx})" style="background:none;border:none;color:#e74c3c;cursor:pointer;font-size:1.1em;">&times;</button>
+        <button onclick="removeFromCart(${idx})" style="background:none;border:none;color:var(--primary);cursor:pointer;font-size:1.1em;">&times;</button>
       `;
       cartList.appendChild(li);
     });
     cartTotal.textContent = total.toFixed(2);
+
+    // Update cart badge
+    if (cartBadge) {
+      if (itemCount > 0) {
+        cartBadge.textContent = itemCount;
+        cartBadge.style.display = 'inline-block';
+      } else {
+        cartBadge.style.display = 'none';
+      }
+    }
   }
 
   function removeFromCart(idx) {
@@ -522,7 +671,29 @@
         feedbackForm.reset();
       });
     }
+
+    // Dark mode toggle functionality
+    const modeToggle = document.getElementById('modeToggle');
+    modeToggle.addEventListener('click', function() {
+      document.body.classList.toggle('dark-mode');
+      const isDarkMode = document.body.classList.contains('dark-mode');
+      modeToggle.innerHTML = `<i class="fas fa-${isDarkMode ? 'sun' : 'moon'}"></i> ${isDarkMode ? 'Light Mode' : 'Dark Mode'}`;
+    });
+
+    renderMenuTabs();
   });
+
+  function enterSite() {
+    document.getElementById('welcomeScreen').style.display = 'none';
+    document.getElementById('mainContent').style.display = 'block';
+    renderMenuTabs();
+    renderMenu();
+    renderCart();
+  }
 </script>
+<footer style="text-align:center;padding:18px 0 10px 0;color:var(--primary);font-weight:600;font-size:1rem;letter-spacing:1px;">
+  &copy; ALSWELL YAW NKUM OTABIL
+</footer>
 </body>
 </html>
+``` 
