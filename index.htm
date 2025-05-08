@@ -263,6 +263,41 @@
     .checkout-btn:hover {
       background: linear-gradient(90deg, #e67e22 60%, #e74c3c 100%);
     }
+    /* Sticky nav bar below header */
+    nav {
+      position: sticky;
+      top: 0;
+      background: linear-gradient(rgba(44,62,80,0.95), rgba(44,62,80,0.95));
+      z-index: 1001;
+      padding: 18px 0 10px 0;
+      box-shadow: 0 2px 8px rgba(44,62,80,0.08);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 32px;
+    }
+    /* Jumia-style cart bounce/rotate animation */
+    .jumia-cart-animate {
+      animation: jumiaCartBounce 0.8s cubic-bezier(.36,.07,.19,.97) both;
+    }
+    @keyframes jumiaCartBounce {
+      0%   { transform: scale(1) rotate(0deg);}
+      10%  { transform: scale(1.2) rotate(-10deg);}
+      20%  { transform: scale(1.1) rotate(10deg);}
+      30%  { transform: scale(1.2) rotate(-10deg);}
+      40%  { transform: scale(1.1) rotate(8deg);}
+      50%  { transform: scale(1.2) rotate(-6deg);}
+      60%  { transform: scale(1.1) rotate(4deg);}
+      70%  { transform: scale(1.15) rotate(-2deg);}
+      80%  { transform: scale(1.1) rotate(0deg);}
+      100% { transform: scale(1) rotate(0deg);}
+    }
+    /* Make cart icon in nav a bit larger for animation effect */
+    .cart-nav-icon {
+      font-size: 1.5em;
+      transition: color 0.2s;
+      vertical-align: middle;
+    }
   </style>
 </head>
 <body>
@@ -283,7 +318,7 @@
     <h1>GCTU Local Restaurant</h1>
     <nav>
       <a href="#menu"><i class="fas fa-utensils"></i> Menu</a>
-      <a href="#cart"><i class="fas fa-shopping-cart"></i> Your Cart</a>
+      <a href="#cart" id="cartNav"><i class="fas fa-shopping-cart cart-nav-icon" id="cartNavIcon"></i> Your Cart</a>
       <a href="#contact"><i class="fas fa-phone"></i> Contact</a>
     </nav>
   </header>
@@ -409,11 +444,23 @@
     });
   }
 
+  function animateCartNavIcon() {
+    const cartNavIcon = document.getElementById('cartNavIcon');
+    if (cartNavIcon) {
+      cartNavIcon.classList.remove('jumia-cart-animate');
+      void cartNavIcon.offsetWidth; // force reflow
+      cartNavIcon.classList.add('jumia-cart-animate');
+    }
+  }
+
   function addToCart(idx, btn) {
-    // Animation
+    // Animation for button
     btn.classList.remove('cart-animate');
-    void btn.offsetWidth; // trigger reflow
+    void btn.offsetWidth;
     btn.classList.add('cart-animate');
+
+    // Jumia-style animation for top cart icon
+    animateCartNavIcon();
 
     // Add to cart logic
     const item = menuItems[idx];
